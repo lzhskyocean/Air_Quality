@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--核心配置文件的约束-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.lzh.dao.AirDao">
+
+    <!--
+    //根据条件查询数据的总条数
+    Integer findCountByDistrictId(@Param("districtId") Long districtId);
+    -->
+    <select id="findCountByDistrictId" resultType="Integer">
+
+        select
+            count(1)
+        from
+        air a, district d
+
+        WHERE
+        a.district_id=d.id
+
+        <if test="districtId != null and districtId != 0">
+            and a.district_id = #{districtId};
+        </if>
+
+
+    </select>
+
+
+    <!--
+     //根据条件分页查询
+    List<Air> fndAriByDistrictIdPage(@Param("districtId") Long districtId,
+                                     @Param("offset") Integer offset,
+                                     @Param("size") Integer size);
+    -->
+    <select id="findAirByDistrictIdPage" resultType="Air">
+
+        select
+            a.*,
+            d.name dName
+        from
+            air a
+        join
+            district d
+        on
+            a.district_id = d.id
+        <where>
+            <if test="districtId != null and districtId != 0">
+                and a.district_id = #{districtId}
+            </if>
+        </where>
+
+        order by monitor_time desc
+
+        limit #{offset},#{size}
+
+    </select>
+
+    <!--
+     //添加空气信息
+    Integer save(Air air);
+    -->
+    <insert id="save">
+        insert into
+            air
+        (district_id,monitor_time, pm10, pm25, monitoring_station)
+            values
+        (#{districtId},#{monitorTime},#{pm10},#{pm25},#{monitoringStation})
+
+    </insert>
+
+    <!--
+    //根据id查询air
+    Air findByAirId(@Param("airId") Long airId);
+    -->
+    <select id="findByAirId" resultType="Air">
+        select * from air where id = #{airId}
+    </select>
+
+    <!--
+    //修改空气质量信息
+    Integer updateAir(Air air);
+    -->
+    <update id="updateAir">
+
+        update
+            air
+        set
+        district_id = #{districtId},
+        monitor_time = #{monitorTime},
+        pm10 = #{pm10},
+        pm25 = #{pm25},
+        monitoring_station = #{monitoringStation}
+        where
+        id = #{id}
+    </update>
+
+    <!--
+    //
+    Integer deleteAirById(@Param("airId") Long airId);
+    -->
+
+    <delete id="deleteAirById">
+        delete from air where id = #{airId}
+    </delete>
+
+
+
+</mapper>

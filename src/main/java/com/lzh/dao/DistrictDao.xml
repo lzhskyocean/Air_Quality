@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--核心配置文件的约束-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.lzh.dao.DistrictDao">
+
+
+    <!--
+    //查询所有的区域
+    List<District> findAllDistrict();
+    -->
+    <select id="findAllDistrict" resultType="District">
+        select * from district
+    </select>
+
+</mapper>
