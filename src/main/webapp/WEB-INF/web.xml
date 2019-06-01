@@ -62,7 +62,7 @@
 
 
 
-
+    <!--配置了多个过滤器,要注意执行顺序(filter-mapping他们的相对位置)-->
     <!--请求编码格式过滤器:CharacterEncodingFilter-->
     <filter>
         <filter-name>CharacterEncodingFilter</filter-name>

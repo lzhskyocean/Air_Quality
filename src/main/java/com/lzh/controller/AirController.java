@@ -136,10 +136,10 @@ public class AirController {
                          BindingResult bindingResult,
                          RedirectAttributes redirectAttributes){
 
-        if(bindingResult.hasErrors()){
+        if(bindingResult.hasErrors() || air.getId()==null){//air.getId()==null防止被人修改你代码,把id改了设置为null,那就不能修改,直这届报错即可
             String updateMsg = bindingResult.getFieldError().getDefaultMessage();
             redirectAttributes.addAttribute("updateMsg",updateMsg);
-            return "redirect:/air/maintain/"+air.getId();
+            return "redirect:/air/maintain/"+air.getId();//air.getId()==null防止被人修改你代码,把id改了设置为null,那就不能修改,直这届报错即可(仅此而已)
         }
 
         Integer count = airService.updateAir(air);
